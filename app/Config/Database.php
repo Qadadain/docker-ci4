@@ -193,6 +193,11 @@ class Database extends Config
     {
         parent::__construct();
 
+        $secretPath = ROOTPATH . 'build/secrets/DB_PASSWORD';
+        if (file_exists($secretPath)) {
+            $this->default['password'] = trim(file_get_contents($secretPath));
+        }
+
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
